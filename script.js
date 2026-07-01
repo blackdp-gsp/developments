@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ---------------- animated tech grid backdrop ---------------- */
 function initGridCanvas(){
   const canvas = document.getElementById('grid-canvas');
+  if (!canvas) return; // Guard clause if canvas doesn't exist
   const ctx = canvas.getContext('2d');
   let w, h, t = 0;
 
@@ -109,32 +110,42 @@ async function loadAppData(){
     const res = await fetch('app.json', { cache: 'no-store' });
     const data = await res.json();
     APP_DATA = data;
-    renderAppData(data);
+    
+    // Because app.json is now an array, pass the first app in the list to render by default
+    if (Array.isArray(data) && data.length > 0) {
+      renderAppData(data[0]); 
+    } else {
+      renderAppData(data);
+    }
   } catch (err){
     console.error('Could not load app.json', err);
-    document.getElementById('app-details').textContent =
-      'Application data could not be loaded. Please check that app.json is present.';
+    const detailsElem = document.getElementById('app-details');
+    if (detailsElem) {
+      detailsElem.textContent = 'Application data could not be loaded. Please check that app.json is present and properly formatted.';
+    }
   }
 }
 
 function renderAppData(data){
-  document.getElementById('stat-version').textContent = 'v' + data.version;
-  document.getElementById('stat-size').textContent = data.size;
-  document.getElementById('stat-dev').textContent = data.developer;
+  if (!data) return;
 
-  document.getElementById('app-name').textContent = data.appName;
-  document.getElementById('app-category').textContent = data.category;
-  document.getElementById('app-details').textContent = data.details;
+  if(document.getElementById('stat-version')) document.getElementById('stat-version').textContent = 'v' + data.version;
+  if(document.getElementById('stat-size')) document.getElementById('stat-size').textContent = data.size;
+  if(document.getElementById('stat-dev')) document.getElementById('stat-dev').textContent = data.developer;
 
-  document.getElementById('meta-version').textContent = data.version;
-  document.getElementById('meta-size').textContent = data.size;
-  document.getElementById('meta-date').textContent = data.releaseDate;
-  document.getElementById('meta-developer').textContent = data.developer;
+  if(document.getElementById('app-name')) document.getElementById('app-name').textContent = data.appName;
+  if(document.getElementById('app-category')) document.getElementById('app-category').textContent = data.category;
+  if(document.getElementById('app-details')) document.getElementById('app-details').textContent = data.details;
 
-  document.getElementById('url-text').textContent = data.url;
+  if(document.getElementById('meta-version')) document.getElementById('meta-version').textContent = data.version;
+  if(document.getElementById('meta-size')) document.getElementById('meta-size').textContent = data.size;
+  if(document.getElementById('meta-date')) document.getElementById('meta-date').textContent = data.releaseDate;
+  if(document.getElementById('meta-developer')) document.getElementById('meta-developer').textContent = data.developer;
+
+  if(document.getElementById('url-text')) document.getElementById('url-text').textContent = data.url;
 
   const icon = document.querySelector('.app-icon span');
-  if (icon){
+  if (icon && data.appName){
     const initials = data.appName.split(' ').map(w => w[0]).join('').slice(0, 2);
     icon.textContent = initials.toUpperCase();
   }
@@ -147,14 +158,17 @@ function wireDownloadButton(data){
   const btn = document.getElementById('download-btn');
   if (!btn) return;
 
-  btn.addEventListener('click', () => {
-    if (btn.classList.contains('downloading')) return;
-    btn.classList.add('downloading');
-    const label = btn.querySelector('.btn-label');
-    const originalLabel = label.textContent;
-    label.textContent = 'INITIATING...';
+  // Clone to remove old event listeners if this function runs multiple times
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
 
-    // Trigger the actual file download from the URL in app.json
+  newBtn.addEventListener('click', () => {
+    if (newBtn.classList.contains('downloading')) return;
+    newBtn.classList.add('downloading');
+    const label = newBtn.querySelector('.btn-label');
+    const originalLabel = label ? label.textContent : 'DOWNLOAD';
+    if (label) label.textContent = 'INITIATING...';
+
     const link = document.createElement('a');
     link.href = data.url;
     link.download = '';
@@ -164,10 +178,10 @@ function wireDownloadButton(data){
     document.body.removeChild(link);
 
     setTimeout(() => {
-      label.textContent = 'DOWNLOAD STARTED';
+      if (label) label.textContent = 'DOWNLOAD STARTED';
       setTimeout(() => {
-        btn.classList.remove('downloading');
-        label.textContent = originalLabel;
+        newBtn.classList.remove('downloading');
+        if (label) label.textContent = originalLabel;
       }, 1600);
     }, 1200);
   });
@@ -188,8 +202,21 @@ function initSearch(){
     const q = input.value.trim().toLowerCase();
     if (!q) return;
 
-    if (APP_DATA && (APP_DATA.appName.toLowerCase().includes(q) || APP_DATA.category.toLowerCase().includes(q))){
-      document.getElementById('app-section').scrollIntoView({ behavior: 'smooth' });
+    let foundApp = null;
+
+    // Search through the array list
+    if (Array.isArray(APP_DATA)) {
+      foundApp = APP_DATA.find(app => app.appName.toLowerCase().includes(q) || app.category.toLowerCase().includes(q));
+    } else if (APP_DATA) {
+      if (APP_DATA.appName.toLowerCase().includes(q) || APP_DATA.category.toLowerCase().includes(q)) {
+        foundApp = APP_DATA;
+      }
+    }
+
+    if (foundApp) {
+      renderAppData(foundApp); // Switch card to display searched item!
+      const appSection = document.getElementById('app-section');
+      if (appSection) appSection.scrollIntoView({ behavior: 'smooth' });
       flashCard();
     } else {
       toast.classList.add('show');
@@ -200,6 +227,7 @@ function initSearch(){
 
 function flashCard(){
   const card = document.getElementById('app-card');
+  if (!card) return;
   card.style.boxShadow = '0 0 0 1px rgba(77,243,255,0.6), 0 20px 70px rgba(77,243,255,0.25)';
   setTimeout(() => { card.style.boxShadow = ''; }, 900);
 }
