@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About // NOVA CORE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .about-main{ padding-top: 60px; padding-bottom: 100px; }
+  .about-hero{ max-width: 720px; margin-bottom: 60px; }
+  .about-hero h1{
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    margin-top: 14px;
+  }
+  .about-hero p{
+    margin-top: 20px;
+    color: var(--ink-dim);
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+  .about-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 60px;
+  }
+  .about-card{
+    background: var(--glass);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    backdrop-filter: blur(16px);
+  }
+  .about-card h3{
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+  .about-card p{
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .back-link{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--cyan-dim);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .back-link:hover{ border-color: var(--cyan); color: var(--cyan); }
+  @media (max-width: 800px){
+    .about-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="grid-canvas"></canvas>
+<div class="scanline"></div>
+<div class="vignette"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◆</span>
+    <span class="brand-text">NOVA<span class="brand-accent">CORE</span></span>
+  </div>
+  <nav class="nav">
+    <a href="index.html" class="nav-link">
+      <span class="nav-link-text">Hub</span>
+      <span class="nav-link-bracket">[ ]</span>
+    </a>
+  </nav>
+</header>
+
+<main class="about-main">
+  <section class="about-hero">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> SYSTEM LOG · ORIGIN</p>
+    <h1>Built from scratch, run by one engineer.</h1>
+    <p>NOVA CORE HUB is the control center for a single-developer application build pipeline. Every release, every version bump, and every download link that lives here is prepared, tested, and shipped by one person — no committee, no bloat, just a fast path from build to your device.</p>
+  </section>
+
+  <section class="about-grid">
+    <div class="about-card">
+      <h3>// DEVELOPER</h3>
+      <p>Designed, engineered, and maintained end-to-end by <strong style="color:var(--ink)">Pragadeesh</strong>. Every pixel and every line of code on this hub was made by hand.</p>
+    </div>
+    <div class="about-card">
+      <h3>// PHILOSOPHY</h3>
+      <p>Fast, clean, and functional. The hub exists to get a working build into your hands with as little friction as possible — no dead clicks, no clutter.</p>
+    </div>
+    <div class="about-card">
+      <h3>// ROADMAP</h3>
+      <p>Future builds will expand the hub into a multi-app dashboard, with version history, changelogs, and rollout tracking for every release.</p>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-link">← Back to Hub</a>
+</main>
+
+<div class="wm" aria-hidden="true">created by pragadeesh</div>
+
+<script src="script.js"></script>
+</body>
+</html>
