@@ -1,20 +1,22 @@
-{
-  "appName": "NOVA CORE",
-  "version": "2.4.1",
-  "developer": "Pragadeesh",
-  "url": "https://example.com/downloads/nova-core-2.4.1.apk",
-  "details": "A next-generation utility application built for speed, precision, and a fully offline-first experience. NOVA CORE brings a clean interface, real-time sync, and rock-solid performance to your device.",
-  "size": "48.2 MB",
-  "releaseDate": "2026-06-15",
-  "category": "Productivity"
-},
-{
-  "appName": "NOVA CORE",
-  "version": "2.4.1",
-  "developer": "Pragadeesh",
-  "url": "https://example.com/downloads/nova-core-2.4.1.apk",
-  "details": "A next-generation utility application built for speed, precision, and a fully offline-first experience. NOVA CORE brings a clean interface, real-time sync, and rock-solid performance to your device.",
-  "size": "48.2 MB",
-  "releaseDate": "2026-06-15",
-  "category": "Productivity"
-}
+[
+  {
+    "appName": "NOVA CORE",
+    "version": "2.4.1",
+    "developer": "Pragadeesh",
+    "url": "https://example.com/downloads/nova-core-2.4.1.apk",
+    "details": "A next-generation utility application built for speed, precision, and a fully offline-first experience. NOVA CORE brings a clean interface, real-time sync, and rock-solid performance to your device.",
+    "size": "48.2 MB",
+    "releaseDate": "2026-06-15",
+    "category": "Productivity"
+  },
+  {
+    "appName": "NEBULA FLOW",
+    "version": "1.0.2",
+    "developer": "Pragadeesh",
+    "url": "https://example.com/downloads/nebula-flow.apk",
+    "details": "An advanced automation layer that connects your workspace modules seamlessly.",
+    "size": "32.1 MB",
+    "releaseDate": "2026-06-28",
+    "category": "Utilities"
+  }
+]
