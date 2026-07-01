@@ -1,5 +1,5 @@
 /* ============================================================
-   PRAGADEESH HUB — Interactive Application Grid Layer
+   PRAGADEESH HUB — Interactive Layout Layer
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAppData();
 });
 
-/* ---------------- Animated Tech Grid Backdrop ---------------- */
+/* ---------------- animated tech grid backdrop ---------------- */
 function initGridCanvas(){
   const canvas = document.getElementById('grid-canvas');
   if (!canvas) return;
@@ -69,7 +69,7 @@ function initGridCanvas(){
   draw();
 }
 
-/* ---------------- Load app.json and Populate UI Grid ---------------- */
+/* ---------------- load app.json and populate UI elements ---------------- */
 let ALL_APPS = [];
 
 async function loadAppData(){
@@ -77,45 +77,45 @@ async function loadAppData(){
     const res = await fetch('app.json', { cache: 'no-store' });
     const data = await res.json();
     
-    // Normalize into array format if it isn't already
+    // Normalize into array format if it's a single object or an array
     ALL_APPS = Array.isArray(data) ? data : [data];
 
-    // 1. Populate global top hero statistics[cite: 1]
-    if(document.getElementById('stat-count')) {
+    // Update top hero statistics panel dynamically
+    if (document.getElementById('stat-count')) {
       document.getElementById('stat-count').textContent = ALL_APPS.length;
     }
-    if(document.getElementById('stat-latest') && ALL_APPS.length > 0) {
-      document.getElementById('stat-latest').textContent = ALL_APPS[0].appName;
+    if (document.getElementById('stat-latest') && ALL_APPS.length > 0) {
+      document.getElementById('stat-latest').textContent = ALL_APPS[0].version;
     }
-    if(document.getElementById('stat-dev') && ALL_APPS.length > 0) {
-      document.getElementById('stat-dev').textContent = ALL_APPS[0].developer || "Pragadeesh";
+    if (document.getElementById('stat-dev') && ALL_APPS.length > 0) {
+      document.getElementById('stat-dev').textContent = ALL_APPS[0].developer;
     }
 
-    // 2. Render all apps inside the grid container[cite: 1]
+    // Build the library grid cards
     renderAppGrid(ALL_APPS);
     initSearch();
 
   } catch (err){
-    console.error('Could not load app.json data structure', err);
+    console.error('Could not load app.json schema parameters', err);
     const grid = document.getElementById('app-grid');
     if (grid) {
-      grid.innerHTML = `<p class="error-msg" style="color: #ff4d4d; font-family: 'JetBrains Mono'; grid-column: 1/-1; text-align: center;">CRITICAL ERROR: Failed to load application library data configuration.</p>`;
+      grid.innerHTML = `<p style="color: #ff4d4d; font-family: 'JetBrains Mono'; text-align: center; width: 100%;">Error loading configurations from app.json.</p>`;
     }
   }
 }
 
-/* ---------------- Build Cards Dynamically ---------------- */
+/* ---------------- Render App Grid Layout Cards ---------------- */
 function renderAppGrid(appsList) {
   const grid = document.getElementById('app-grid');
   const emptyMsg = document.getElementById('no-apps-msg');
   const headingIndex = document.getElementById('heading-index');
   
   if (!grid) return;
-  grid.innerHTML = ""; // Clear existing elements
+  grid.innerHTML = ""; // Wipe container clear
 
   if (appsList.length === 0) {
     if (emptyMsg) emptyMsg.hidden = false;
-    if (headingIndex) headingIndex.textContent = `// INDEX RESULT: 0 FOUND`;
+    if (headingIndex) headingIndex.textContent = `// COLLECTION RESULT: 0 FOUND`;
     return;
   }
 
@@ -123,37 +123,44 @@ function renderAppGrid(appsList) {
   if (headingIndex) headingIndex.textContent = `// RUNNING SYSTEMS [${appsList.length}]`;
 
   appsList.forEach((app, index) => {
-    // Generate two-letter badge initials based on App Name
-    const initials = app.appName ? app.appName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : 'APP';
+    // Generate standard 2 letter code for app icon
+    const initials = app.appName ? app.appName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : 'AP';
 
-    // Construct cyberpunk styled card layout matching your dashboard UI
+    // Construct the customized theme block
     const card = document.createElement('div');
     card.className = 'app-card';
-    card.id = `card-${index}`;
+    card.id = `app-card-${index}`;
+    card.style.cssText = "background: rgba(10, 11, 16, 0.65); border: 1px solid rgba(77, 243, 255, 0.15); padding: 24px; border-radius: 8px; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;";
+    
     card.innerHTML = `
-      <div class="app-icon"><span>${initials}</span></div>
-      <div class="app-category">${app.category || 'Utility'}</div>
-      <h3 class="app-name" style="font-family: 'Orbitron'; margin: 0.5rem 0; color: #fff;">${app.appName}</h3>
-      <p class="app-details" style="font-family: 'Space Grotesk'; font-size: 0.9rem; color: #a0a5b5; margin-bottom: 1.2rem; line-height: 1.4;">${app.details || ''}</p>
-      
-      <div class="meta-spec-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #4df3ff; margin-bottom: 1.5rem; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 4px;">
-        <div>VER: <span style="color:#fff;">${app.version}</span></div>
-        <div>SIZE: <span style="color:#fff;">${app.size}</span></div>
-        <div style="grid-column: 1 / -1;">REL: <span style="color:#fff;">${app.releaseDate}</span></div>
+      <div>
+        <div class="app-icon" style="width: 48px; height: 48px; background: rgba(138, 91, 255, 0.15); border: 1px solid rgba(138, 91, 255, 0.4); display: flex; align-items: center; justify-content: center; border-radius: 6px; font-family: 'Orbitron'; font-weight: bold; color: #8a5bff; margin-bottom: 16px;">
+          <span>${initials}</span>
+        </div>
+        <div class="app-category" style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #8a5bff; text-transform: uppercase; tracking-letter: 1px; margin-bottom: 4px;">${app.category || 'Utility'}</div>
+        <h3 class="app-name" style="font-family: 'Orbitron'; font-size: 1.35rem; font-weight: 700; color: #fff; margin: 0 0 12px 0;">${app.appName}</h3>
+        <p class="app-details" style="font-family: 'Space Grotesk'; font-size: 0.9rem; color: #a0a5b5; line-height: 1.5; margin: 0 0 20px 0;">${app.details || ''}</p>
       </div>
 
-      <button class="download-btn" style="width: 100%;" data-url="${app.url}">
-        <span class="btn-label">DOWNLOAD APK</span>
-      </button>
+      <div>
+        <div class="meta-spec-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #4df3ff; margin-bottom: 16px; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 4px; border-left: 2px solid #4df3ff;">
+          <div>VER: <span style="color:#fff;">${app.version}</span></div>
+          <div>SIZE: <span style="color:#fff;">${app.size}</span></div>
+          <div style="grid-column: 1 / -1; margin-top: 4px;">RELEASED: <span style="color:#fff;">${app.releaseDate}</span></div>
+        </div>
+
+        <button class="download-btn" style="width: 100%; background: transparent; border: 1px solid #4df3ff; color: #4df3ff; padding: 12px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: all 0.2s ease; border-radius: 4px;" data-url="${app.url}">
+          <span class="btn-label">DOWNLOAD APK</span>
+        </button>
+      </div>
     `;
 
     grid.appendChild(card);
     wireCardDownload(card.querySelector('.download-btn'), app);
-    applyTiltEffect(card);
   });
 }
 
-/* ---------------- Micro-interactions for Download Targets ---------------- */
+/* ---------------- wire card download mechanics ---------------- */
 function wireCardDownload(btn, appData) {
   if (!btn) return;
   btn.addEventListener('click', () => {
@@ -161,8 +168,7 @@ function wireCardDownload(btn, appData) {
     btn.classList.add('downloading');
     
     const label = btn.querySelector('.btn-label');
-    const originalText = label ? label.textContent : 'DOWNLOAD APK';
-    if (label) label.textContent = 'CONNECTING...';
+    if (label) label.textContent = 'INITIATING LINK...';
 
     const link = document.createElement('a');
     link.href = appData.url;
@@ -173,16 +179,16 @@ function wireCardDownload(btn, appData) {
     document.body.removeChild(link);
 
     setTimeout(() => {
-      if (label) label.textContent = 'PACKET RECEIVED';
+      if (label) label.textContent = 'DOWNLOAD STARTED';
       setTimeout(() => {
         btn.classList.remove('downloading');
-        if (label) label.textContent = originalText;
+        if (label) label.textContent = 'DOWNLOAD APK';
       }, 1600);
     }, 1200);
   });
 }
 
-/* ---------------- Live Filter Matrix Search ---------------- */
+/* ---------------- live interactive input search matrix ---------------- */
 function initSearch(){
   const input = document.getElementById('search-input');
   if (!input) return;
@@ -199,16 +205,3 @@ function initSearch(){
     renderAppGrid(filtered);
   });
 }
-
-/* ---------------- Mouse Tracking Hover Effect ---------------- */
-function applyTiltEffect(card) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    const rotY = (px - 0.5) * 10;
-    const rotX = (0.5 - py) * 10;
-
-    card.style.transform = `perspective(1000px) rotateX(${Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
