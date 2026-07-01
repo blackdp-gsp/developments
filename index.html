@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVA CORE // Application Hub</title>
+<title>PRAGA HUB // Application Access Point</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -17,12 +17,12 @@
 <header class="topbar">
   <div class="brand">
     <span class="brand-mark">◆</span>
-    <span class="brand-text">NOVA<span class="brand-accent">CORE</span></span>
+    <span class="brand-text">PRAGA<span class="brand-accent">HUB</span></span>
   </div>
 
   <div class="searchwrap">
     <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"/></svg>
-    <input id="search-input" type="text" placeholder="Search the hub..." autocomplete="off">
+    <input id="search-input" type="text" placeholder="Search applications..." autocomplete="off">
     <span class="search-glow"></span>
   </div>
 
@@ -38,21 +38,21 @@
 
   <section class="hero" id="hero">
     <div class="hero-left">
-      <p class="eyebrow"><span class="eyebrow-dot"></span> SYSTEM ONLINE · BUILD 2.4.1</p>
+      <p class="eyebrow"><span class="eyebrow-dot"></span> SYSTEM ONLINE · MULTI-APP ACCESS</p>
       <h1 class="hero-title">
-        <span class="line">DEPLOY YOUR</span>
-        <span class="line accent-text" data-text="APPLICATION.">APPLICATION.</span>
+        <span class="line">EVERY APP.</span>
+        <span class="line accent-text" data-text="ONE ENTRY POINT.">ONE ENTRY POINT.</span>
       </h1>
-      <p class="hero-sub">This is home base — the control deck where every build of <strong>NOVA CORE</strong> lives, ships, and gets into your hands. Engineered by Pragadeesh.</p>
+      <p class="hero-sub">This is home base — the single access point where every application built by <strong>Pragadeesh</strong> lives, ships, and reaches your device. Pick one below.</p>
 
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-num" id="stat-version">—</span>
-          <span class="stat-label">Version</span>
+          <span class="stat-num" id="stat-count">—</span>
+          <span class="stat-label">Applications</span>
         </div>
         <div class="stat">
-          <span class="stat-num" id="stat-size">—</span>
-          <span class="stat-label">Package Size</span>
+          <span class="stat-num" id="stat-latest">—</span>
+          <span class="stat-label">Latest Release</span>
         </div>
         <div class="stat">
           <span class="stat-num" id="stat-dev">—</span>
@@ -80,67 +80,19 @@
 
   <section class="app-section" id="app-section">
     <div class="section-heading">
-      <span class="heading-index">// PRIMARY BUILD</span>
-      <h2>Application Package</h2>
+      <span class="heading-index" id="heading-index">// LOADING APPLICATIONS</span>
+      <h2>Application Library</h2>
     </div>
 
-    <div class="app-card" id="app-card">
-      <div class="card-shine"></div>
-      <div class="card-corner tl"></div>
-      <div class="card-corner tr"></div>
-      <div class="card-corner bl"></div>
-      <div class="card-corner br"></div>
-
-      <div class="card-top">
-        <div class="app-icon">
-          <span>NC</span>
-        </div>
-        <div class="app-heading">
-          <h3 id="app-name">Loading...</h3>
-          <p id="app-category" class="app-category">—</p>
-        </div>
-        <div class="status-pill">
-          <span class="status-dot"></span> STABLE
-        </div>
-      </div>
-
-      <p id="app-details" class="app-details">Fetching application data...</p>
-
-      <div class="meta-grid">
-        <div class="meta-item">
-          <span class="meta-label">Version</span>
-          <span class="meta-value" id="meta-version">—</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">Size</span>
-          <span class="meta-value" id="meta-size">—</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">Released</span>
-          <span class="meta-value" id="meta-date">—</span>
-        </div>
-        <div class="meta-item">
-          <span class="meta-label">Developer</span>
-          <span class="meta-value" id="meta-developer">—</span>
-        </div>
-      </div>
-
-      <div class="card-actions">
-        <button id="download-btn" class="download-btn">
-          <span class="btn-label">DOWNLOAD PACKAGE</span>
-          <span class="btn-icon">↓</span>
-          <span class="btn-progress"></span>
-        </button>
-        <div class="url-display" id="url-display">
-          <span class="url-dot"></span>
-          <span id="url-text">resolving source...</span>
-        </div>
-      </div>
+    <div class="app-grid" id="app-grid">
+      <!-- app cards injected here by script.js -->
     </div>
+
+    <p class="no-apps-msg" id="no-apps-msg" hidden>No applications match your search.</p>
   </section>
 
   <section class="footer-strip">
-    <p>NOVA CORE HUB · CRAFTED &amp; MAINTAINED BY <strong>PRAGADEESH</strong></p>
+    <p>PRAGA HUB · CRAFTED &amp; MAINTAINED BY <strong>PRAGADEESH</strong></p>
   </section>
 
 </main>
